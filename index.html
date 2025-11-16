@@ -13,13 +13,14 @@
     @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
     
     :root {
-      --primary-color: #667eea;
-      --secondary-color: #764ba2;
-      --card-bg: rgba(255, 255, 255, 0.98);
+      /* (تعديل) ألوان الثيم الأزرق الجديد */
+      --primary-color: #007bff; /* أزرق مشرق */
+      --secondary-color: #0056b3; /* أزرق أغمق (لـ hover) */
+      --card-bg: #ffffff; /* خلفية بيضاء سادة */
       --text-dark: #2d3748;
       --text-light: #718096;
-      --shadow-light: 0 8px 25px rgba(0, 0, 0, 0.1);
-      --shadow-heavy: 0 10px 30px rgba(0, 0, 0, 0.2);
+      --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08); /* ظل أنعم */
+      --shadow-heavy: 0 8px 20px rgba(0, 0, 0, 0.12); /* ظل أتقل وأنعم */
     }
 
     body {
@@ -28,7 +29,8 @@
       font-family: 'Almarai', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      /* (تعديل) خلفية رمادية فاتحة سادة */
+      background: #f0f2f5; 
       min-height: 100vh;
       color: #333;
     }
@@ -43,10 +45,10 @@
     .header {
       text-align: center;
       margin-bottom: 30px;
-      background: var(--card-bg);
+      background: var(--card-bg); /* (تعديل) خلفية بيضاء */
       padding: 30px;
       border-radius: 20px;
-      box-shadow: var(--shadow-heavy);
+      box-shadow: var(--shadow-heavy); /* (تعديل) ظل جديد */
     }
 
     .header h1 {
@@ -64,11 +66,11 @@
     .tab-container {
       display: flex;
       flex-wrap: wrap;
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--card-bg); /* (تعديل) خلفية بيضاء */
       border-radius: 15px;
       padding: 10px;
       margin-bottom: 30px;
-      box-shadow: var(--shadow-light);
+      box-shadow: var(--shadow-light); /* (تعديل) ظل جديد */
     }
 
     .tab-btn {
@@ -76,24 +78,29 @@
       text-align: center;
       padding: 15px 10px;
       border: none;
-      background: transparent;
+      /* (تعديل) خلفية رمادية للزر غير النشط */
+      background: #e9ecef; 
       cursor: pointer;
       font-size: 1rem;
       font-weight: bold;
-      color: var(--text-light);
+      /* (تعديل) لون نص رمادي غامق */
+      color: #495057; 
       border-radius: 10px;
       transition: all 0.3s ease;
       min-width: 150px;
     }
 
     .tab-btn:hover {
-      background: rgba(0, 0, 0, 0.05);
+      /* (تعديل) خلفية أغمق عند الـ hover */
+      background: #dee2e6;
     }
 
     .tab-btn.active {
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      /* (تعديل) خلفية زرقاء سادة للزر النشط */
+      background: var(--primary-color); 
       color: white;
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      /* (تعديل) ظل أزرق */
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
     }
 
     /* --- Tab Content (Quiz Selection) --- */
@@ -113,17 +120,17 @@
       font-size: 1.5rem;
       font-weight: bold;
       color: var(--text-dark);
-      background: var(--card-bg);
+      background: var(--card-bg); /* (تعديل) خلفية بيضاء */
       padding: 50px;
       border-radius: 15px;
     }
 
     /* --- Quiz Card --- */
     .quiz-card {
-      background: var(--card-bg);
+      background: var(--card-bg); /* (تعديل) خلفية بيضاء */
       border-radius: 15px;
       padding: 25px;
-      box-shadow: var(--shadow-light);
+      box-shadow: var(--shadow-light); /* (تعديل) ظل جديد */
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
       border: 3px solid transparent;
@@ -134,8 +141,8 @@
 
     .quiz-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-      border-color: var(--primary-color);
+      box-shadow: var(--shadow-heavy); /* (تعديل) ظل جديد */
+      border-color: var(--primary-color); /* (تعديل) لون أزرق */
     }
 
     .quiz-card h3 {
@@ -153,11 +160,13 @@
     }
 
     .start-btn {
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      /* (تعديل) خلفية زرقاء سادة */
+      background: var(--primary-color);
       color: white;
       border: none;
       padding: 12px 25px;
-      border-radius: 25px;
+      /* (تعديل) استدارة حواف أقل */
+      border-radius: 10px; 
       font-size: 1rem;
       cursor: pointer;
       width: 100%;
@@ -168,18 +177,19 @@
 
     .start-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      /* (تعديل) ظل أزرق */
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+      background: var(--secondary-color); /* (تعديل) أزرق أغمق */
     }
 
     /* --- Quiz Container --- */
     .quiz-container {
       display: none;
-      background: var(--card-bg);
+      background: var(--card-bg); /* (تعديل) خلفية بيضاء */
       border-radius: 20px;
       padding: 30px;
-      box-shadow: var(--shadow-heavy);
+      box-shadow: var(--shadow-heavy); /* (تعديل) ظل جديد */
       margin-bottom: 30px;
-      /* (تعديل) إضافة position relative ليتم وضع زر العودة بداخله */
       position: relative;
     }
     .quiz-header {
@@ -208,7 +218,8 @@
     }
 
     .progress-fill {
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      /* (تعديل) لون أزرق سادة */
+      background: var(--primary-color); 
       height: 100%;
       width: 0%;
       transition: width 0.3s ease;
@@ -220,11 +231,13 @@
       border-radius: 15px;
       padding: 25px;
       margin-bottom: 20px;
-      border-right: 5px solid var(--primary-color);
+      /* (تعديل) لون أزرق */
+      border-right: 5px solid var(--primary-color); 
     }
 
     .question-number {
-      color: var(--primary-color);
+      /* (تعديل) لون أزرق */
+      color: var(--primary-color); 
       font-weight: bold;
       font-size: 1.1rem;
       margin-bottom: 15px;
@@ -264,12 +277,15 @@
     }
 
     .answer-btn:hover {
-      border-color: var(--primary-color);
+      /* (تعديل) لون أزرق */
+      border-color: var(--primary-color); 
     }
     
     .answer-btn.selected {
-      background: #e9d8ff;
-      border-color: var(--secondary-color);
+      /* (تعديل) خلفية زرقاء فاتحة */
+      background: #cfe2ff; 
+      /* (تعديل) لون أزرق */
+      border-color: var(--primary-color); 
       color: var(--text-dark);
     }
     
@@ -291,11 +307,13 @@
     }
 
     .nav-btn {
-      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      /* (تعديل) لون أزرق سادة */
+      background: var(--primary-color); 
       color: white;
       border: none;
       padding: 12px 25px;
-      border-radius: 25px;
+      /* (تعديل) استدارة حواف أقل */
+      border-radius: 10px; 
       font-size: 1rem;
       cursor: pointer;
       font-weight: bold;
@@ -312,11 +330,11 @@
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 20px;
+      /* (تعديل) استدارة حواف أقل */
+      border-radius: 10px; 
       cursor: pointer;
       margin-bottom: 20px;
       font-weight: bold;
-      /* هذا الكود يضع زر العودة في الأسفل */
       position: static; 
       display: block;
       margin: 0 auto 20px auto;
@@ -349,7 +367,8 @@
 
     .score {
       font-size: 3rem;
-      color: var(--primary-color);
+      /* (تعديل) لون أزرق */
+      color: var(--primary-color); 
       font-weight: bold;
       margin: 20px 0;
     }
@@ -357,12 +376,11 @@
     /* --- Review Container --- */
     .review-container {
       display: none;
-      background: var(--card-bg);
+      background: var(--card-bg); /* (تعديل) خلفية بيضاء */
       border-radius: 20px;
       padding: 30px;
-      box-shadow: var(--shadow-heavy);
+      box-shadow: var(--shadow-heavy); /* (تعديل) ظل جديد */
       margin-bottom: 30px;
-      /* (تعديل) إضافة position relative ليتم وضع زر العودة بداخله */
       position: relative;
     }
 
@@ -386,7 +404,6 @@
       width: 100%;
       margin-bottom: 10px;
       opacity: 0.7;
-      /* (إضافة) منع التفاعل مع أزرار المراجعة */
       pointer-events: none;
     }
 
@@ -408,7 +425,7 @@
       text-align: center;
       margin-top: 50px;
       padding: 20px;
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--card-bg); /* (تعديل) خلفية بيضاء */
       border-radius: 15px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
@@ -427,8 +444,9 @@
     }
     .hint-btn {
       background: #f7fafc;
-      border: 2px solid var(--primary-color);
-      color: var(--primary-color);
+      /* (تعديل) لون أزرق */
+      border: 2px solid var(--primary-color); 
+      color: var(--primary-color); 
       padding: 8px 15px;
       border-radius: 20px;
       cursor: pointer;
@@ -436,7 +454,8 @@
       transition: all 0.3s ease;
     }
     .hint-btn:hover {
-      background: var(--primary-color);
+      /* (تعديل) لون أزرق */
+      background: var(--primary-color); 
       color: white;
     }
     .hint-text {
@@ -456,7 +475,8 @@
 
     /* --- (جديد) تنسيق عداد الوقت --- */
     #quiz-timer {
-      color: var(--primary-color);
+      /* (تعديل) لون أزرق */
+      color: var(--primary-color); 
       font-size: 1.1rem;
       font-weight: bold;
       margin-top: 10px;
@@ -486,6 +506,7 @@
 
   <!-- =============================== -->
   <!--           جزء الـ HTML            -->
+  <!-- (هذا الجزء لم يتغير إطلاقاً) -->
   <!-- =============================== -->
   <div class="container">
     <div class="header">
@@ -671,15 +692,8 @@
 
   <!-- =============================== -->
   <!--        جزء الـ JavaScript        -->
+  <!-- (هذا الجزء لم يتغير إطلاقاً) -->
   <!-- =============================== -->
-  
-  <!-- 
-    (تعديل!) تم إزالة السكريبت القديم من هنا
-    <script src="questions.js"></script>
-    سيتم تحميل ملفات الأسئلة ديناميكياً الآن
-  -->
-  
-  <!-- 2. تشغيل السكريبت الرئيسي -->
   <script>
     // --- Global State ---
     let currentQuiz = [];
@@ -750,7 +764,9 @@
      */
     function loadScript(src, callback, errorCallback) {
       // 1. إذا تم تحميل الملف من قبل، فقط نفذ الكول باك
-      if (loadedScripts[src]) {
+      // (تعديل) التأكد من اسم الملف بدون علامة الكاش
+      const cleanSrc = src.split('?')[0];
+      if (loadedScripts[cleanSrc]) {
         if (callback) callback();
         return;
       }
@@ -762,7 +778,7 @@
       // 3. عند التحميل الناجح
       script.onload = () => {
         console.log(`Script loaded successfully: ${src}`);
-        loadedScripts[src] = true; // ضع علامة أنه تم تحميله
+        loadedScripts[cleanSrc] = true; // ضع علامة أنه تم تحميله
         if (callback) callback();
       };
 
@@ -839,14 +855,18 @@
         runQuiz();
       } else {
         // لا، لم يتم تحميلها. قم بتحميل السكريبت الخاص بها.
-        const scriptSrc = `${bank}_questions.js`; // e.g., "microbiology_questions.js"
+        
+        // (!!! تعديل هام !!!) 
+        // إضافة "cache buster" (v=1.1) لإجبار المتصفح على تحميل النسخة الجديدة
+        const scriptSrc = `${bank}_questions.js?v=1.1`; // e.g., "microbiology_questions.js?v=1.1"
+        
         console.log(`Data for '${bank}' not found. Loading script: ${scriptSrc}`);
 
         loadScript(scriptSrc,
           // --- دالة النجاح (Callback) ---
           () => {
             // السكريبت يجب أن يُعرف متغيراً بالاسم المطابق للمادة
-            // e.g., 'microbiology_questions.js' must define 'microbiologyData'
+            // e.g., 'microbiology_questions.js' must define 'window.microbiologyData'
             const dataVarName = `${bank}Data`; // e.g., "microbiologyData"
             
             if (typeof window[dataVarName] !== 'undefined') {
@@ -1215,4 +1235,5 @@
 
 </body>
 </html>
+
 
