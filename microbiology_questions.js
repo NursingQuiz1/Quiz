@@ -1,5 +1,5 @@
 
-const microbiologyData = {
+window.microbiologyData = {
   morphology: {
     title: "Bacterial Morphology",
     questions: [
