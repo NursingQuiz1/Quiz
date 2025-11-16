@@ -673,8 +673,11 @@
   <!--        جزء الـ JavaScript        -->
   <!-- =============================== -->
   
-  <!-- 1. تحميل ملف الأسئلة أولاً -->
-  <script src="questions.js"></script>
+  <!-- 
+    (تعديل!) تم إزالة السكريبت القديم من هنا
+    <script src="questions.js"></script>
+    سيتم تحميل ملفات الأسئلة ديناميكياً الآن
+  -->
   
   <!-- 2. تشغيل السكريبت الرئيسي -->
   <script>
@@ -687,6 +690,11 @@
     // (جديد) متغيرات العداد
     let timerInterval = null;
     let secondsElapsed = 0;
+
+    // (جديد) متغيرات لتخزين الأسئلة والملفات التي تم تحميلها
+    let quizDataBank = {}; // سيخزن البيانات الفعلية (e.g., quizDataBank['microbiology'] = { ... })
+    let loadedScripts = {}; // سيتتبع الملفات التي تم تحميلها (e.g., loadedScripts['microbiology_questions.js'] = true)
+
 
     /**
      * Shuffles an array in place.
@@ -735,47 +743,141 @@
     }
 
     /**
-     * Starts a selected quiz.
+     * (جديد) دالة تحميل ملف الأسئلة ديناميكياً
+     * @param {string} src - The script source URL (e.g., 'microbiology_questions.js')
+     * @param {function} callback - Function to run on successful load
+     * @param {function} errorCallback - Function to run on error
+     */
+    function loadScript(src, callback, errorCallback) {
+      // 1. إذا تم تحميل الملف من قبل، فقط نفذ الكول باك
+      if (loadedScripts[src]) {
+        if (callback) callback();
+        return;
+      }
+      
+      // 2. إذا لم يتم تحميله، قم بإنشاء عنصر سكريبت جديد
+      const script = document.createElement('script');
+      script.src = src;
+
+      // 3. عند التحميل الناجح
+      script.onload = () => {
+        console.log(`Script loaded successfully: ${src}`);
+        loadedScripts[src] = true; // ضع علامة أنه تم تحميله
+        if (callback) callback();
+      };
+
+      // 4. عند الفشل في التحميل
+      script.onerror = () => {
+        console.error(`Failed to load script: ${src}`);
+        if (errorCallback) errorCallback();
+      };
+
+      // 5. أضف السكريبت إلى الـ head لبدء التحميل
+      document.head.appendChild(script);
+    }
+
+
+    /**
+     * (معدل) يبدأ اختباراً محدداً عن طريق تحميل السكريبت الخاص به أولاً
      */
     function startQuiz(bank, quizId) {
-      // (مهم!) نتأكد أن 'quizData' اتحمل من الملف الخارجي
-      if (typeof quizData === 'undefined') {
-          console.error("ملف 'questions.js' لم يُحمل أو يحتوي على خطأ.");
-          alert("خطأ في تحميل الأسئلة. حاول تحديث الصفحة.");
-          return;
-      }
+
+      // --- (جديد) دالة داخلية لبدء الاختبار الفعلي (بعد التأكد من تحميل البيانات) ---
+      const runQuiz = () => {
+        // 1. احصل على بيانات المادة من المخزن
+        const bankData = quizDataBank[bank]; // e.g., quizDataBank['microbiology']
         
-      if (!quizData[bank] || !quizData[bank][quizId] || !quizData[bank][quizId].questions) {
+        if (!bankData) {
+          console.error(`Data for bank '${bank}' is missing even after script load.`);
+          alert("خطأ فادح: بيانات المادة غير موجودة.");
+          return;
+        }
+
+        // 2. تأكد من وجود الاختبار (quizId) داخل بيانات المادة
+        if (!bankData[quizId] || !bankData[quizId].questions) {
           console.error("Quiz not found or empty!", bank, quizId);
+          // إذا لم يتم العثور على الاختبار، اعرض "قريباً" في التاب
           const tabToShow = document.getElementById(bank);
-          if(tabToShow) {
-            // نمسح أي كروت قديمة ونضع رسالة "قريباً"
+          if (tabToShow) {
             tabToShow.innerHTML = '<p class="coming-soon">الأسئلة قادمة قريباً...</p>';
           }
-          openTab(bank); // نفتح التاب عشان المستخدم يشوف الرسالة
+          openTab(bank); // افتح التاب ليرى المستخدم الرسالة
           return;
-      }
+        }
         
-      const quiz = quizData[bank][quizId];
-      currentQuiz = shuffleArray([...quiz.questions]);
-      quizTitle = quiz.title;
-      currentQuestionIndex = 0;
-      userAnswers = new Array(currentQuiz.length).fill(null); 
+        // 3. (نفس الكود القديم) إذا وجد الاختبار، ابدأه
+        const quiz = bankData[quizId];
+        currentQuiz = shuffleArray([...quiz.questions]);
+        quizTitle = quiz.title;
+        currentQuestionIndex = 0;
+        userAnswers = new Array(currentQuiz.length).fill(null); 
 
-      // (جديد) بدء/تصفير عداد الوقت
-      if (timerInterval) clearInterval(timerInterval); // إيقاف أي عداد قديم
-      secondsElapsed = 0;
-      document.getElementById("quiz-timer").textContent = "00:00";
-      timerInterval = setInterval(updateTimer, 1000); // بدء عداد جديد
+        // (جديد) بدء/تصفير عداد الوقت
+        if (timerInterval) clearInterval(timerInterval); // إيقاف أي عداد قديم
+        secondsElapsed = 0;
+        document.getElementById("quiz-timer").textContent = "00:00";
+        timerInterval = setInterval(updateTimer, 1000); // بدء عداد جديد
 
-      document.getElementById("current-quiz-title").textContent = quizTitle;
-      document.getElementById("quiz-selection").style.display = "none";
-      document.getElementById("quiz-container").style.display = "block";
-      document.getElementById("results").style.display = "none";
-      document.getElementById("review-container").style.display = "none";
+        document.getElementById("current-quiz-title").textContent = quizTitle;
+        document.getElementById("quiz-selection").style.display = "none";
+        document.getElementById("quiz-container").style.display = "block";
+        document.getElementById("results").style.display = "none";
+        document.getElementById("review-container").style.display = "none";
 
-      displayQuestion();
-      updateNavigation();
+        displayQuestion();
+        updateNavigation();
+      };
+      // --- نهاية دالة runQuiz ---
+
+
+      // --- المنطق الرئيسي لدالة startQuiz ---
+
+      // 1. هل بيانات المادة (bank) موجودة بالفعل في المخزن؟
+      if (quizDataBank[bank]) {
+        // نعم، تم تحميلها من قبل. ابدأ الاختبار فوراً.
+        console.log(`Data for '${bank}' already in bank. Running quiz.`);
+        runQuiz();
+      } else {
+        // لا، لم يتم تحميلها. قم بتحميل السكريبت الخاص بها.
+        const scriptSrc = `${bank}_questions.js`; // e.g., "microbiology_questions.js"
+        console.log(`Data for '${bank}' not found. Loading script: ${scriptSrc}`);
+
+        loadScript(scriptSrc,
+          // --- دالة النجاح (Callback) ---
+          () => {
+            // السكريبت يجب أن يُعرف متغيراً بالاسم المطابق للمادة
+            // e.g., 'microbiology_questions.js' must define 'microbiologyData'
+            const dataVarName = `${bank}Data`; // e.g., "microbiologyData"
+            
+            if (typeof window[dataVarName] !== 'undefined') {
+              // نجح! قم بتخزين البيانات في المخزن الرئيسي
+              quizDataBank[bank] = window[dataVarName];
+              console.log(`Successfully loaded and stored data for '${bank}'.`);
+              // الآن ابدأ الاختبار
+              runQuiz();
+            } else {
+              // السكريبت تم تحميله، لكنه لا يحتوي على المتغير المتوقع
+              console.error(`Script ${scriptSrc} loaded, but did not define ${dataVarName}.`);
+              // اعتبرها كأنها "قادمة قريباً"
+              const tabToShow = document.getElementById(bank);
+              if(tabToShow) {
+                tabToShow.innerHTML = '<p class="coming-soon">خطأ في ملف الأسئلة. قريباً...</p>';
+              }
+              openTab(bank);
+            }
+          },
+          // --- دالة الفشل (Error Callback) ---
+          () => {
+            // فشل تحميل السكريبت (e.g., 404 Not Found)
+            console.error(`Failed to load script: ${scriptSrc}. Marking as 'Coming Soon'.`);
+            const tabToShow = document.getElementById(bank);
+            if(tabToShow) {
+              tabToShow.innerHTML = '<p class="coming-soon">الأسئلة قادمة قريباً...</p>';
+            }
+            openTab(bank);
+          }
+        );
+      }
     }
     
     /**
@@ -1069,6 +1171,7 @@
       });
 
       // 2. Quiz cards
+      // (تعديل!) المستمع هو نفسه، لكن الدالة التي يستدعيها (startQuiz) أصبحت معدلة
       document.querySelectorAll('.quiz-card').forEach(card => {
         card.addEventListener('click', () => {
           startQuiz(card.dataset.bank, card.dataset.quiz);
