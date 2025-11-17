@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Nursing Platform </title></title>
+  <title> Nursing Platform </title>
 
   <style>
     /* إضافة خط المرع لضمان دعم العربية */
@@ -1091,6 +1091,9 @@
       } else {
         // لا، لم يتم تحميلها. قم بتحميل السكريبت الخاص بها.
         
+        // ======================================================
+        // (*** هذا هو السطر الذي يستخدم اسم ملفك الصحيح ***)
+        // ======================================================
         const scriptSrc = `${bank}_questions.js?v=1.1`; // e.g., "microbiology_questions.js?v=1.1"
         
         console.log(`Data for '${bank}' not found. Loading script: ${scriptSrc}`);
@@ -1147,6 +1150,7 @@
       let optionsHTML = '';
       
       // (تعديل) تحديد اتجاه النص للأسئلة العربية
+      // هذا السطر بيبحث عن كلمات عربية. بما إن كل أسئلة المايكرو إنجليزي، هيفضل false
       const isRtlQuestion = questionData.q.startsWith("البكتيريا") || questionData.q.includes("صح وخطأ");
       const textClass = isRtlQuestion ? "rtl" : "";
 
@@ -1163,16 +1167,22 @@
         }).join('');
          optionsHTML += '</div>';
       } else if (questionData.type === "tf") {
+        // ======================================================
+        // (*** هذا هو الكود الذي تم تعديله ***)
+        // ======================================================
         optionsHTML = '<div class="tf-options">'; // Use the specific TF wrapper
         optionsHTML += `
-          <button class="answer-btn rtl ${userAnswer !== null && userAnswer.answer === true ? 'selected' : ''}" data-tf-value="true">
-            صح
+          <button class="answer-btn ${userAnswer !== null && userAnswer.answer === true ? 'selected' : ''}" data-tf-value="true">
+            True
           </button>
-          <button class="answer-btn rtl ${userAnswer !== null && userAnswer.answer === false ? 'selected' : ''}" data-tf-value="false">
-            خطأ
+          <button class="answer-btn ${userAnswer !== null && userAnswer.answer === false ? 'selected' : ''}" data-tf-value="false">
+            False
           </button>
         `;
          optionsHTML += '</div>';
+         // ======================================================
+         // (*** نهاية الكود المعدل ***)
+         // ======================================================
       }
      
       questionContainer.innerHTML = `
@@ -1401,14 +1411,20 @@
             return `<div class="${className} ${optionClass}">${option}</div>`;
           }).join('');
         } else if (question.type === "tf") {
+          // ======================================================
+          // (*** هذا هو الكود الذي تم تعديله ***)
+          // ======================================================
           optionsReviewHtml = `
-            <div class="review-option rtl ${correctAnswer === true ? 'correct' : ''} ${userAnswer && userAnswer.answer === true && !isCorrect ? 'user-incorrect' : ''}">
-              صح
+            <div class="review-option ${correctAnswer === true ? 'correct' : ''} ${userAnswer && userAnswer.answer === true && !isCorrect ? 'user-incorrect' : ''}">
+              True
             </div>
-            <div class="review-option rtl ${correctAnswer === false ? 'correct' : ''} ${userAnswer && userAnswer.answer === false && !isCorrect ? 'user-incorrect' : ''}">
-              خطأ
+            <div class="review-option ${correctAnswer === false ? 'correct' : ''} ${userAnswer && userAnswer.answer === false && !isCorrect ? 'user-incorrect' : ''}">
+              False
             </div>
           `;
+          // ======================================================
+          // (*** نهاية الكود المعدل ***)
+          // ======================================================
         }
 
         reviewContent.innerHTML += `
@@ -1482,4 +1498,5 @@
 
 </body>
 </html>
+
 
