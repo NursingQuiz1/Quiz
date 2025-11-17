@@ -200,12 +200,13 @@
       border-bottom: none;
     }
 
-    .quiz-title {
-      color: var(--text-dark);
-      font-size: 2rem;
-      /* (تعديل) تقليل الهامش السفلي */
-      margin-bottom: 5px;
-    }
+.quiz-title {
+  /* (تعديل) تغيير اللون إلى أزرق غامق صريح */
+  color: #0d47a1; 
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
     
     /* (جديد) حاوية لعداد الأسئلة والوقت */
     .quiz-header-info {
@@ -256,37 +257,38 @@
     }
 
     /* --- كارت السؤال (من الثيم الجديد) --- */
-    .question-card {
-      background: #f8fafc; /* slate-50 (تعديل) */
-      border-radius: var(--radius-md);
-      padding: 25px;
-      margin-bottom: 20px;
-      /* (تعديل) إزالة الحد الأيمن الأزرق */
-      border-right: none;
-      /* (تعديل) فرض اتجاه LTR ليطابق الصورة */
-      direction: ltr;
-      text-align: left;
-    }
+.question-card {
+  /* (تعديل) خلفية زرقاء فاتحة جداً (زي الصورة) */
+  background: #eff6ff; 
+  border-radius: var(--radius-md);
+  padding: 25px;
+  margin-bottom: 20px;
+  /* (تعديل) إضافة الحافة الزرقاء على اليمين */
+  border-right: 4px solid var(--primary-color);
+  /* (تعديل) جعل اتجاه الكارد من اليمين لليسار */
+  direction: rtl;
+  text-align: right;
+}
 
-    .question-number {
-      /* (تعديل) تغيير اللون إلى الرمادي */
-      color: var(--text-light);
-      font-weight: bold;
-      /* (تعديل) تصغير الخط قليلاً */
-      font-size: 1rem;
-      margin-bottom: 15px;
-    }
 
-    .question-text {
-      /* (تعديل) جعل الخط أعرض (Bold) */
-      font-weight: 700;
-      font-size: 1.25rem; /* (تعديل) تعديل حجم الخط */
-      color: var(--text-dark);
-      margin-bottom: 25px;
-      line-height: 1.6;
-      text-align: left;
-      direction: ltr;
-    }
+.question-number {
+  /* (تعديل) تغيير اللون إلى أزرق غامق */
+  color: #0d47a1; 
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+
+.question-text, .answer-btn {
+  font-size: 1.3rem;
+  color: var(--text-dark);
+  margin-bottom: 25px;
+  line-height: 1.6;
+  text-align: left;
+  direction: ltr;
+}
+
 
     .answer-options {
       display: grid;
