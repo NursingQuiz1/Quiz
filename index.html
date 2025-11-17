@@ -587,39 +587,7 @@
       <button class="tab-btn" data-tab="ethics">Ethics Bank</button>
     </div>
     
-<div id="quiz-selection">
- <div id="ethics" class="tab-content active">
-  <div class="quiz-card" data-bank="ethics" data-quiz="ethics_1">
-   <h3>Ethics in Nursing - Part 1</h3>
-   <p>20 سؤال (المبادئ الأساسية)</p>
-  <button class="start-btn">ابدأ الاختبار</button>
-  </div>
-<div class="quiz-card" data-bank="ethics" data-quiz="ethics_2">
-  <h3>Ethics in Nursing - Part 2</h3>
-  <p>20 سؤال (حقوق المريض والانتهاكات)</p>
-  <button class="start-btn">ابدأ الاختبار</button>
-</div>
-<div class="quiz-card" data-bank="ethics" data-quiz="ethics_3">
-  <h3>Ethics in Nursing - Part 3</h3>
-  <p>20 سؤال (السرية والمساءلة)</p>
-  <button class="start-btn">ابدأ الاختبار</button>
-</div>
-<div class="quiz-card" data-bank="ethics" data-quiz="ethics_4">
-  <h3>Ethics in Nursing - Part 4</h3>
-  <p>20 سؤال (العدالة والكفاءة)</p>
-  <button class="start-btn">ابدأ الاختبار</button>
-</div>
-<div class="quiz-card" data-bank="ethics" data-quiz="ethics_5">
-  <h3>Ethics in Nursing - Part 5</h3>
-  <p>20 سؤال (المسؤوليات المهنية)</p>
-  <button class="start-btn">ابدأ الاختبار</button>
-</div>
-<div class="quiz-card" data-bank="ethics" data-quiz="ethics_6">
-  <h3>Ethics in Nursing - Part 6</h3>
-  <p>20 سؤال (المواقف القانونية والأخلاقية)</p>
-  <button class="start-btn">ابدأ الاختبار</button>
-</div>
-</div>
+
 
 
     <div id="quiz-selection">
@@ -649,6 +617,41 @@
           <p>18 سؤال صح وخطأ</p><button class="start-btn">ابدأ الاختبار</button>
         </div>
       </div>
+          <div id="ethics" class="tab-content">
+  "quiz-card" data-bank="ethics" data-quiz="ethics_1">
+  <h3>Ethics in Nursing - Part 1</h3>
+  <p>20 سؤال (المبادئ الأساسية)</p>
+  <button class="start-btn">ابدأ الاختبار</button>
+</div>
+<div class="quiz-card" data-bank="ethics" data-quiz="ethics_2">
+  <h3>Ethics in Nursing - Part 2</h3>
+  <p>20 سؤال (حقوق المريض والانتهاكات)</p>
+  <button class="start-btn">ابدأ الاختبار</button>
+</div>
+<div class="quiz-card" data-bank="ethics" data-quiz="ethics_3">
+  <h3>Ethics in Nursing - Part 3</h3>
+  <p>20 سؤال (السرية والمساءلة)</p>
+  <button class="start-btn">ابدأ الاختبار</button>
+</div>
+<div class="quiz-card" data-bank="ethics" data-quiz="ethics_4">
+  <h3>Ethics in Nursing - Part 4</h3>
+  <p>20 سؤال (العدالة والكفاءة)</p>
+  <button class="start-btn">ابدأ الاختبار</button>
+</div>
+<div class="quiz-card" data-bank="ethics" data-quiz="ethics_5">
+  <h3>Ethics in Nursing - Part 5</h3>
+  <p>20 سؤال (المسؤوليات المهنية)</p>
+  <button class="start-btn">ابدأ الاختبار</button>
+</div>
+<div class="quiz-card" data-bank="ethics" data-quiz="ethics_6">
+  <h3>Ethics in Nursing - Part 6</h3>
+  <p>20 سؤال (المواقف القانونية والأخلاقية)</p>
+  <button class="start-btn">ابدأ الاختبار</button>
+</div>
+
+
+</div>
+
 
       <div id="fundamental" class="tab-content">
         <!-- ====================================================== -->
@@ -1379,29 +1382,3 @@
 
       // 5. All "Go Back" (to main menu) buttons
       document.querySelectorAll('.go-back').forEach(btn => {
-        btn.addEventListener('click', goBack);
-      });
-      console.log("Event listeners initialized.");
-    }
-
-    // --- Initial Load ---
-    document.addEventListener("DOMContentLoaded", () => {
-        // ... (نفس الكود الخاص بالتحقق من التاب) ...
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            if(tab.children.length > 1 || tab.children[0]?.classList.contains('quiz-card')) {
-                // This tab has cards, do nothing
-            } else if (tab.children.length === 1 && tab.children[0]?.classList.contains('coming-soon')) {
-                // This tab already has the "coming soon" message
-            } else {
-                // This tab is empty
-                tab.innerHTML = '<p class="coming-soon">الأسئلة قادمة قريباً...</p>';
-            }
-        });
-        
-        openTab('microbiology'); // افتح التبويب الافتراضي
-        initializeEventListeners(); // اربط كل الأزرار
-    });
-  </script>
-
-</body>
-</html>
