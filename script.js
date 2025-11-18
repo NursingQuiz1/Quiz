@@ -171,7 +171,7 @@ function startQuiz(bank, quizId) {
     // ======================================================
     // (*** هذا هو السطر الذي يستخدم اسم ملفك الصحيح ***)
     // ======================================================
-    const scriptSrc = `${bank}_questions.js?v=1.1`; // e.g., "microbiology_questions.js?v=1.1"
+    const scriptSrc = `questions/${bank}_questions.js?v=1.1`; // e.g., "microbiology_questions.js?v=1.1"
     
     console.log(`Data for '${bank}' not found. Loading script: ${scriptSrc}`);
 
