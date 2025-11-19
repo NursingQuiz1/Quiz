@@ -1,4 +1,4 @@
-window.microbiologyData = {
+window.microbiology_bank_data = {
   morphology: {
     title: "Bacterial Morphology",
     questions: [
