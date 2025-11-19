@@ -18,19 +18,20 @@
   --radius-lg: 16px;
 }
 
-/* --- (جديد) ألوان الوضع الليلي --- */
+/* --- ألوان الوضع الليلي --- */
 body.dark-mode {
   --card-bg: #1e293b;
   --body-bg: #0f172a;
   --text-dark: #f1f5f9;
   --text-light: #94a3b8;
   --border-color: #334155;
-  --quiz-card-bg: #1e293b; /* لون كارت السؤال */
+  --quiz-card-bg: #1e293b;
   --quiz-card-border: #6366f1;
 }
 
-/* تعديلات خاصة للوضع الليلي على عناصر محددة */
-body.dark-mode .quiz-card:hover {
+/* تعديلات خاصة للوضع الليلي */
+body.dark-mode .quiz-card:hover,
+body.dark-mode .source-card:hover {
   background-color: #334155;
 }
 body.dark-mode .answer-btn {
@@ -54,9 +55,24 @@ body.dark-mode .question-card {
 }
 body.dark-mode .quiz-title, 
 body.dark-mode .question-number {
-    color: #60a5fa; /* لون أزرق فاتح للعناوين في الليلي */
+    color: #60a5fa;
+}
+body.dark-mode .explanation-box {
+  background-color: #422006;
+  border-color: #b45309;
+  color: #fcd34d;
+}
+body.dark-mode .answer-btn.selected {
+    background: #3730a3;
+    color: white;
+}
+body.dark-mode .hint-text {
+    background: #334155;
+    color: #f1f5f9;
+    border-color: #475569;
 }
 
+/* --- التنسيقات العامة --- */
 body {
   box-sizing: border-box;
   font-family: 'Almarai', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -65,7 +81,7 @@ body {
   background-color: var(--body-bg);
   min-height: 100vh;
   color: var(--text-dark);
-  transition: background-color 0.3s ease, color 0.3s ease; /* تنعيم التحويل */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -82,10 +98,9 @@ body {
   padding: 30px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-heavy);
-  position: relative; /* عشان زرار الثيم */
+  position: relative;
 }
 
-/* (جديد) تنسيق زر تغيير الوضع */
 .theme-btn {
   position: absolute;
   top: 20px;
@@ -108,11 +123,10 @@ body {
   font-size: 2.5rem;
   margin: 0;
 }
- .header p {
+.header p {
   font-size: 1.1rem;
   color: var(--text-light);
 }
-
 
 /* --- Tab Navigation --- */
 .tab-container {
@@ -137,7 +151,7 @@ body {
   color: var(--text-light);
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
-  min-width: 150px;
+  min-width: 100px;
 }
 
 .tab-btn:hover {
@@ -151,26 +165,57 @@ body {
   box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
 }
 
-/* --- Tab Content (Quiz Selection) --- */
-.tab-content {
-  display: none;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+/* --- Source Selection (Bank vs Doctor) [الجديد] --- */
+.source-container {
+    display: none; /* مخفي افتراضياً ويظهر بالجافاسكريبت */
+    justify-content: center;
+    gap: 30px;
+    margin: 40px 0;
+    flex-wrap: wrap;
 }
 
-.tab-content.active {
-  display: grid;
+.source-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 40px 20px;
+    width: 300px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-light);
 }
 
-.coming-soon {
-  grid-column: 1 / -1;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--text-dark);
-  background: var(--card-bg);
-  padding: 50px;
-  border-radius: var(--radius-lg);
+.source-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-heavy);
+}
+
+.source-card h3 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.source-card p {
+    color: var(--text-light);
+}
+
+.doctor-card h3 {
+    color: var(--secondary-color);
+}
+
+.doctor-card:hover {
+    border-color: var(--secondary-color);
+}
+
+/* --- منطقة عرض الكروت الديناميكية --- */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
 }
 
 /* --- Quiz Card --- */
@@ -185,10 +230,9 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative; /* (جديد) عشان شارة النتيجة */
+  position: relative;
 }
 
-/* (جديد) شارة النتيجة السابقة */
 .history-badge {
     position: absolute;
     top: -10px;
@@ -202,6 +246,7 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     animation: popIn 0.3s ease;
 }
+
 @keyframes popIn {
     from { transform: scale(0); }
     to { transform: scale(1); }
@@ -246,7 +291,6 @@ body {
   box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
 }
 
-
 /* --- Quiz Container --- */
 .quiz-container {
   display: none;
@@ -258,6 +302,7 @@ body {
   margin-bottom: 30px;
   position: relative;
 }
+
 .quiz-header {
   text-align: center;
   margin-bottom: 20px;
@@ -315,17 +360,16 @@ body {
   transition: width 0.3s ease;
 }
 
-/* --- كارت السؤال --- */
+/* --- Question Card --- */
 .question-card {
-  background: var(--quiz-card-bg); /* (تعديل) استخدام متغير للون */
+  background: var(--quiz-card-bg);
   border-radius: var(--radius-md);
   padding: 25px;
   margin-bottom: 20px;
-  border-right: 4px solid var(--quiz-card-border); /* (تعديل) */
+  border-right: 4px solid var(--quiz-card-border);
   direction: rtl;
   text-align: right;
 }
-
 
 .question-number {
   color: #0d47a1; 
@@ -334,26 +378,19 @@ body {
   margin-bottom: 15px;
 }
 
-
-.question-text, .answer-btn {
+.question-text {
   font-size: 1.3rem;
   color: var(--text-dark);
   margin-bottom: 25px;
   line-height: 1.6;
-}
-
-.question-text, 
-.answer-btn {
   text-align: left;
   direction: ltr;
 }
 
-.question-text.rtl,
-.answer-btn.rtl {
+.question-text.rtl {
     text-align: right;
     direction: rtl;
 }
-
 
 .answer-options {
   display: grid;
@@ -373,6 +410,13 @@ body {
   transition: all 0.3s ease;
   font-weight: bold;
   width: 100%;
+  text-align: left;
+  direction: ltr;
+}
+
+.answer-btn.rtl {
+    text-align: right;
+    direction: rtl;
 }
 
 .answer-btn:hover {
@@ -383,12 +427,7 @@ body {
 .answer-btn.selected {
   background: #e0e7ff;
   border-color: var(--secondary-color);
-  color: #1e293b; /* Keep text dark for readability in selected state */
-}
-/* تعديل للوضع الليلي للاختيار المحدد */
-body.dark-mode .answer-btn.selected {
-    background: #3730a3; /* Indigo dark */
-    color: white;
+  color: #1e293b;
 }
 
 .tf-options {
@@ -399,8 +438,7 @@ body.dark-mode .answer-btn.selected {
     margin: 0 auto;
 }
 
-
-/* --- Quiz Navigation --- */
+/* --- Navigation --- */
 .quiz-navigation {
   display: flex;
   justify-content: space-between;
@@ -440,14 +478,29 @@ body.dark-mode .answer-btn.selected {
   cursor: pointer;
   margin-bottom: 20px;
   font-weight: bold;
-  position: static; 
-  display: block;
-  margin: 0 auto 20px auto;
-  max-width: 200px;
-  text-align: center;
   transition: background-color 0.2s ease;
 }
-  .hint-container {
+
+.back-btn:hover {
+  background: var(--text-dark);
+}
+
+/* زر الخروج من الامتحان (مثبت فوق) */
+.quiz-container .back-btn {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    margin: 0;
+    max-width: 150px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    background: #475569;
+    border-radius: 25px;
+    border: none;
+}
+
+/* --- Hints --- */
+.hint-container {
   margin-top: 20px;
   text-align: center;
 }
@@ -472,39 +525,11 @@ body.dark-mode .answer-btn.selected {
   background: #f7fafc;
   border-right: 5px solid #e2e8f0;
   border-radius: 10px;
-  color: #1e293b; /* Force dark text in light box for now, or adapt */
+  color: #1e293b;
   font-style: italic;
 }
-/* تعديل التلميح للوضع الليلي */
-body.dark-mode .hint-text {
-    background: #334155;
-    color: #f1f5f9;
-    border-color: #475569;
-}
 
-.hint-container.active .hint-text {
-  display: block;
-}
-
-.quiz-container .back-btn {
-    position: absolute;
-    top: 25px;
-    right: 30px;
-    margin: 0;
-    max-width: 150px;
-    padding: 8px 16px;
-    font-size: 0.9rem;
-    background: #475569;
-    border-radius: 25px;
-    border: none;
-}
-
-.back-btn:hover {
-  background: var(--text-dark);
-}
-
-
-/* --- Results --- */
+/* --- Results & Review --- */
 .results {
   text-align: center;
   display: none;
@@ -517,16 +542,6 @@ body.dark-mode .hint-text {
   margin: 20px 0;
 }
 
-.final-time {
-  font-size: 1.5rem;
-  color: var(--text-light);
-  margin-top: -10px;
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-
-/* --- Review Container --- */
 .review-container {
   display: none;
   background: var(--card-bg);
@@ -564,7 +579,7 @@ body.dark-mode .hint-text {
   background: #dcfce7;
   border-color: #22c55e;
   opacity: 1;
-  color: #14532d; /* Dark green text */
+  color: #14532d;
 }
 
 .review-option.user-incorrect {
@@ -572,14 +587,13 @@ body.dark-mode .hint-text {
   border-color: #ef4444;
   text-decoration: line-through;
   opacity: 1;
-  color: #7f1d1d; /* Dark red text */
+  color: #7f1d1d;
 }
 
-/* (جديد) صندوق الشرح في المراجعة */
 .explanation-box {
   margin-top: 15px;
   padding: 15px;
-  background-color: #fffbeb; /* Light yellow */
+  background-color: #fffbeb;
   border: 1px solid #fcd34d;
   border-radius: 8px;
   color: #92400e;
@@ -588,11 +602,11 @@ body.dark-mode .hint-text {
   direction: ltr;
 }
 
-/* (جديد) دعم الوضع الليلي لصندوق الشرح */
-body.dark-mode .explanation-box {
-  background-color: #422006; /* Dark brown/orange */
-  border-color: #b45309;
-  color: #fcd34d;
+.coming-soon {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    padding: 50px;
 }
 
 /* --- Footer --- */
@@ -612,30 +626,12 @@ body.dark-mode .explanation-box {
   font-weight: bold;
 }
 
+/* --- Mobile --- */
 @media (max-width: 768px) {
-  .container {
-      padding: 15px;
-  }
-  .tab-container {
-    flex-direction: column;
-  }
-  .tab-btn {
-    width: 100%;
-  }
-  .tab-content {
-    grid-template-columns: 1fr;
-  }
-  .quiz-container .back-btn {
-    position: static;
-    margin: 0 auto 20px auto;
-  }
-  .quiz-header-info {
-      flex-direction: column;
-      gap: 15px;
-  }
-  .quiz-container {
-      padding-top: 15px;
-  }
+  .container { padding: 15px; }
+  .tab-container { flex-direction: column; }
+  .tab-btn { width: 100%; }
+  .quiz-header-info { flex-direction: column; gap: 15px; }
   .quiz-container .back-btn, #quiz-timer {
       position: static;
       width: 100%;
@@ -643,7 +639,5 @@ body.dark-mode .explanation-box {
       margin: 10px auto;
       text-align: center;
   }
-  #quiz-timer {
-      order: -1;
-  }
-  }
+  #quiz-timer { order: -1; }
+}
