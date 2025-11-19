@@ -593,7 +593,6 @@ body {
 .review-option.user-incorrect {
   background: #fee2e2;
   border-color: #ef4444;
-  text-decoration: line-through;
   opacity: 1;
   color: #7f1d1d;
 }
