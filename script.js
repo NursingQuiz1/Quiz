@@ -14,12 +14,12 @@ const themeToggleBtn = document.getElementById('theme-toggle');
 const bodyElement = document.body;
 if (localStorage.getItem('theme') === 'dark') {
     bodyElement.classList.add('dark-mode');
-    themeToggleBtn.textContent = '🔦';
+    themeToggleBtn.textContent = '☀️';
 }
 themeToggleBtn.addEventListener('click', () => {
     bodyElement.classList.toggle('dark-mode');
     localStorage.setItem('theme', bodyElement.classList.contains('dark-mode') ? 'dark' : 'light');
-    themeToggleBtn.textContent = bodyElement.classList.contains('dark-mode') ? '🔦' : '🔮';
+    themeToggleBtn.textContent = bodyElement.classList.contains('dark-mode') ? '☀️' : '🌑';
 });
 
 // --- Navigation Logic ---
